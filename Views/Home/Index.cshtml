@@ -1,0 +1,247 @@
+﻿@model IEnumerable<GestaoProfissionais.Models.Profissional>
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <!-- Filtro de Especialidades -->
+    <form method="get" class="form-inline" id="filtroForm">
+        <div class="form-group">
+            <select name="selecionada" class="form-control" id="selecionada" onchange="submitWithPlaceholder(this)" style="background-color: #01595840">
+                <option selected disabled id="placeholder">
+                    @("Filtrar por especialidade: " + (ViewBag.Selecionada ?? "Todos"))
+                </option>
+                <option value="Todos">Todos</option>
+                @foreach (var especialidade in ViewBag.Especialidades as List<GestaoProfissionais.Models.Especialidade>)
+                {
+                    <option value="@especialidade.Nome">@especialidade.Nome</option>
+                }
+            </select>
+        </div>
+    </form>
+
+    <!-- Botão para Adicionar Novo Profissional -->
+    <a href="#adicionarModal" class="btn btn-success" style="background-color: #015958; border-color: #015958; color: white;" data-toggle="modal">
+        Adicionar +
+    </a>
+</div>
+
+<!-- Tabela de Profissionais -->
+<div class="w-100">
+    <table class="table table-bordered mt-4">
+        <thead>
+            <tr>
+                <th><b>#</b></th>
+                <th>Nome</th>
+                <th>Especialidade</th>
+                <th>Tipo de Documento</th>
+                <th>Número do Documento</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var profissional in Model)
+            {
+                <tr>
+                    <td><b>@profissional.Id</b></td>
+                    <td>@profissional.Nome</td>
+                    <td>@profissional.Especialidade?.Nome</td>
+                    <td>@profissional.TipoDocumento</td>
+                    <td>@profissional.NumeroDocumento</td>
+                    <td>
+                        <!-- Dropdown de Ações -->
+                        <div class="dropdown">
+                            <button class="btn" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false" style="border: none">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16" style="color: black">
+                                    <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5" />
+                                </svg>
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <!-- Botão Editar -->
+                                <li>
+                                    <a class="dropdown-item" data-toggle="modal" data-target="#editarModal"
+                                       data-id="@profissional.Id"
+                                       data-nome="@profissional.Nome"
+                                       data-tipoDocumento="@profissional.TipoDocumento"
+                                       data-numeroDocumento="@profissional.NumeroDocumento"
+                                       data-especialidadeId="@profissional.EspecialidadeId">
+                                        Editar
+                                    </a>
+                                </li>
+                                <!-- Botão Excluir -->
+                                <li>
+                                    <a class="dropdown-item" data-toggle="modal" data-target="#excluirModal"
+                                       data-id="@profissional.Id"
+                                       data-nome="@profissional.Nome"
+                                       data-tipoDocumento="@profissional.TipoDocumento"
+                                       data-numeroDocumento="@profissional.NumeroDocumento">
+                                        Excluir
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<script>
+    function submitWithPlaceholder(selectElement) {
+        const selectedOption = selectElement.options[selectElement.selectedIndex];
+
+        const placeholderOption = document.getElementById("placeholder");
+        placeholderOption.textContent = "Filtrar por: " + selectedOption.text;
+
+        selectElement.form.submit();
+    }
+</script>
+
+<!-- Modal para Cadastrar Novo Profissional -->
+<div class="modal fade" id="adicionarModal" tabindex="-1" role="dialog" aria-labelledby="adicionarModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <form method="post" action="@Url.Action("Adicionar", "Home")">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="adicionarModalLabel">Cadastrar Novo Profissional</h5>
+                    <button type="button" class="close border-0 bg-transparent" style="font-size: 20px" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="Nome">Nome</label>
+                        <input type="text" class="form-control" id="Nome" name="Nome" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="Especialidade">Especialidade</label>
+                        <select id="Especialidade" name="EspecialidadeId" class="form-control">
+                            <option value="" hidden></option>
+                            @foreach (var especialidade in ViewBag.Especialidades as List<GestaoProfissionais.Models.Especialidade>)
+                            {
+                                <option value="@especialidade.Id">@especialidade.Nome</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="TipoDocumento">Tipo de Documento</label>
+                        <input type="text" class="form-control" id="TipoDocumento" name="TipoDocumento" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="NumeroDocumento">Número do Documento</label>
+                        <input type="text" class="form-control" id="NumeroDocumento" name="NumeroDocumento" required />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary" style="background-color: #015958">Salvar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal para Editar Profissional -->
+<div class="modal fade" id="editarModal" tabindex="-1" role="dialog" aria-labelledby="editarModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <form method="post" action="@Url.Action("Editar", "Home")">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editarModalLabel">Editar Profissional</h5>
+                    <button type="button" class="close border-0 bg-transparent" style="font-size: 20px" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="Nome">Nome</label>
+                        <input type="text" class="form-control" id="NomeEdit" name="Nome" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="Especialidade">Especialidade</label>
+                        <select id="EspecialidadeEdit" name="EspecialidadeId" class="form-control">
+                            @foreach (var especialidade in ViewBag.Especialidades as List<GestaoProfissionais.Models.Especialidade>)
+                            {
+                                <option value="@especialidade.Id">@especialidade.Nome</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="TipoDocumento">Tipo de Documento</label>
+                        <input type="text" class="form-control" id="TipoDocumentoEdit" name="TipoDocumento" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="NumeroDocumento">Número do Documento</label>
+                        <input type="text" class="form-control" id="NumeroDocumentoEdit" name="NumeroDocumento" required />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <input type="hidden" id="ProfissionalId" name="Id" />
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary" style="background-color: #015958">Salvar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal para Excluir Profissional -->
+<div class="modal fade" id="excluirModal" tabindex="-1" role="dialog" aria-labelledby="excluirModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="excluirModalLabel">Excluir Profissional</h5>
+                <button type="button" class="close border-0 bg-transparent" style="font-size: 20px" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>
+                    Tem certeza que deseja excluir o profissional <span id="nomeExcluido"></span>
+                    (<span id="tipoDocumentoExcluido"></span> <span id="numeroDocumentoExcluido"></span>)?
+                    Essa ação não pode ser desfeita!
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <a href="#" id="confirmarExclusao" class="btn btn-danger">Sim, Excluir</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<script>
+    $('#excluirModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget);
+        var nome = button.data('nome');
+        var tipoDocumento = button.data('tipodocumento');
+        var numeroDocumento = button.data('numerodocumento');
+        var id = button.data('id');
+
+        var modal = $(this);
+        modal.find('#nomeExcluido').text(nome);
+        modal.find('#tipoDocumentoExcluido').text(tipoDocumento);
+        modal.find('#numeroDocumentoExcluido').text(numeroDocumento);
+
+        modal.find('#confirmarExclusao').attr('href', '/Home/Excluir/' + id);
+    });
+</script>
+
+<script>
+    $('#editarModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget);
+        var id = button.data('id');
+        var nome = button.data('nome');
+        var tipoDocumento = button.data('tipodocumento');
+        var numeroDocumento = button.data('numerodocumento');
+        var especialidadeId = button.data('especialidadeid');
+
+        var modal = $(this);
+        modal.find('#ProfissionalId').val(id);
+        modal.find('#NomeEdit').val(nome);
+        modal.find('#TipoDocumentoEdit').val(tipoDocumento);
+        modal.find('#NumeroDocumentoEdit').val(numeroDocumento);
+        modal.find('#EspecialidadeEdit').val(especialidadeId);
+    });
+</script>
