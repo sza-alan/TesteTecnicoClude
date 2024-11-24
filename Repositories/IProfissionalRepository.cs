@@ -1,8 +1,8 @@
 ﻿using GestaoProfissionais.Models;
 
-namespace GestaoProfissionais.Services;
+namespace GestaoProfissionais.Repositories;
 
-public interface IProfissionalService
+public interface IProfissionalRepository
 {
     Task<List<Profissional>> ObterProfissionaisPorEspecialidadeAsync(string especialidade);
     Task AdicionarProfissionalAsync(Profissional profissional);

@@ -2,17 +2,17 @@
 using GestaoProfissionais.Data;
 using Microsoft.EntityFrameworkCore;
 
-namespace GestaoProfissionais.Services;
+namespace GestaoProfissionais.Repositories;
 
-public class ProfissionalService : IProfissionalService
+public class ProfissionalRepository : IProfissionalRepository
 {
     private readonly AppDbContext _context;
-    private readonly IEspecialidadeService _especialidadeService;
+    private readonly IEspecialidadeRepository _especialidadeRepo;
 
-    public ProfissionalService(AppDbContext context, IEspecialidadeService especialidadeService)
+    public ProfissionalRepository(AppDbContext context, IEspecialidadeRepository especialidadeRepo)
     {
         _context = context;
-        _especialidadeService = especialidadeService;
+        _especialidadeRepo = especialidadeRepo;
     }
 
     public async Task<List<Profissional>> ObterProfissionaisPorEspecialidadeAsync(string especialidade)
@@ -28,7 +28,7 @@ public class ProfissionalService : IProfissionalService
     {
         if (profissional.EspecialidadeId != 0)
         {
-            var especialidade = await _especialidadeService.ObterEspecialidadePorIdAsync(profissional.EspecialidadeId);
+            var especialidade = await _especialidadeRepo.ObterEspecialidadePorIdAsync(profissional.EspecialidadeId);
             if (especialidade != null)
             {
                 profissional.Especialidade = especialidade;

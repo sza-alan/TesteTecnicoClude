@@ -1,8 +1,8 @@
 ﻿using GestaoProfissionais.Models;
 
-namespace GestaoProfissionais.Services;
+namespace GestaoProfissionais.Repositories;
 
-public interface IEspecialidadeService
+public interface IEspecialidadeRepository
 {
     Task<Especialidade> ObterEspecialidadePorIdAsync(int id);
     Task<List<Especialidade>> ObterTodasEspecialidadesAsync();

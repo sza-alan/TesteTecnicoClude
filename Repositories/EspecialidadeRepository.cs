@@ -2,13 +2,13 @@
 using GestaoProfissionais.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace GestaoProfissionais.Services;
+namespace GestaoProfissionais.Repositories;
 
-public class EspecialidadeService : IEspecialidadeService
+public class EspecialidadeRepository : IEspecialidadeRepository
 {
     private readonly AppDbContext _context;
 
-    public EspecialidadeService(AppDbContext context)
+    public EspecialidadeRepository(AppDbContext context)
     {
         _context = context;
     }

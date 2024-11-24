@@ -24,7 +24,7 @@
 </div>
 
 <!-- Tabela de Profissionais -->
-<div class="w-100">
+<div>
     <table class="table table-bordered mt-4">
         <thead>
             <tr>
@@ -37,46 +37,57 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var profissional in Model)
+            @if (Model != null && Model.Any())
+            {
+                foreach (var profissional in Model)
+                {
+                    <tr>
+                        <td><b>@profissional.Id</b></td>
+                        <td>@profissional.Nome</td>
+                        <td>@profissional.Especialidade?.Nome</td>
+                        <td>@profissional.TipoDocumento</td>
+                        <td>@profissional.NumeroDocumento</td>
+                        <td>
+                            <!-- Dropdown de Ações -->
+                            <div class="dropdown">
+                                <button class="btn" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false" style="border: none">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16" style="color: black">
+                                        <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5" />
+                                    </svg>
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <!-- Botão Editar -->
+                                    <li>
+                                        <a class="dropdown-item" data-toggle="modal" data-target="#editarModal"
+                                           data-id="@profissional.Id"
+                                           data-nome="@profissional.Nome"
+                                           data-tipoDocumento="@profissional.TipoDocumento"
+                                           data-numeroDocumento="@profissional.NumeroDocumento"
+                                           data-especialidadeId="@profissional.EspecialidadeId">
+                                            Editar
+                                        </a>
+                                    </li>
+                                    <!-- Botão Excluir -->
+                                    <li>
+                                        <a class="dropdown-item" data-toggle="modal" data-target="#excluirModal"
+                                           data-id="@profissional.Id"
+                                           data-nome="@profissional.Nome"
+                                           data-tipoDocumento="@profissional.TipoDocumento"
+                                           data-numeroDocumento="@profissional.NumeroDocumento">
+                                            Excluir
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            }
+            else
             {
                 <tr>
-                    <td><b>@profissional.Id</b></td>
-                    <td>@profissional.Nome</td>
-                    <td>@profissional.Especialidade?.Nome</td>
-                    <td>@profissional.TipoDocumento</td>
-                    <td>@profissional.NumeroDocumento</td>
-                    <td>
-                        <!-- Dropdown de Ações -->
-                        <div class="dropdown">
-                            <button class="btn" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false" style="border: none">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16" style="color: black">
-                                    <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5" />
-                                </svg>
-                            </button>
-                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <!-- Botão Editar -->
-                                <li>
-                                    <a class="dropdown-item" data-toggle="modal" data-target="#editarModal"
-                                       data-id="@profissional.Id"
-                                       data-nome="@profissional.Nome"
-                                       data-tipoDocumento="@profissional.TipoDocumento"
-                                       data-numeroDocumento="@profissional.NumeroDocumento"
-                                       data-especialidadeId="@profissional.EspecialidadeId">
-                                        Editar
-                                    </a>
-                                </li>
-                                <!-- Botão Excluir -->
-                                <li>
-                                    <a class="dropdown-item" data-toggle="modal" data-target="#excluirModal"
-                                       data-id="@profissional.Id"
-                                       data-nome="@profissional.Nome"
-                                       data-tipoDocumento="@profissional.TipoDocumento"
-                                       data-numeroDocumento="@profissional.NumeroDocumento">
-                                        Excluir
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
+                    <td colspan="6" class="text-center">
+                        Não há registros disponíveis.
                     </td>
                 </tr>
             }

@@ -4,6 +4,7 @@ namespace GestaoProfissionais.Models
 {
     public class Especialidade
     {
+        [Key]
         public int Id { get; set; }
 
         [Required]
