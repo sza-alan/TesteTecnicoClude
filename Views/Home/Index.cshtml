@@ -124,7 +124,7 @@
                     </div>
                     <div class="form-group">
                         <label for="Especialidade">Especialidade</label>
-                        <select id="Especialidade" name="EspecialidadeId" class="form-control">
+                        <select id="Especialidade" name="EspecialidadeId" class="form-control" required>
                             <option value="" hidden></option>
                             @foreach (var especialidade in ViewBag.Especialidades as List<GestaoProfissionais.Models.Especialidade>)
                             {
