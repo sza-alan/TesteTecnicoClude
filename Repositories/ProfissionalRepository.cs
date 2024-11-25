@@ -31,7 +31,7 @@ public class ProfissionalRepository : IProfissionalRepository
             var especialidade = await _especialidadeRepo.ObterEspecialidadePorIdAsync(profissional.EspecialidadeId);
             if (especialidade != null)
             {
-                profissional.Especialidade = especialidade;
+                profissional.Especialidade = especialidade;//
             }
         }
 
