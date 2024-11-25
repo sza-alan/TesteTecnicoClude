@@ -1,7 +1,6 @@
 ﻿@model IEnumerable<GestaoProfissionais.Models.Profissional>
 
 <div class="d-flex justify-content-between align-items-center mb-4">
-    <!-- Filtro de Especialidades -->
     <form method="get" class="form-inline" id="filtroForm">
         <div class="form-group">
             <select name="selecionada" class="form-control" id="selecionada" onchange="submitWithPlaceholder(this)" style="background-color: #01595840">
@@ -17,13 +16,11 @@
         </div>
     </form>
 
-    <!-- Botão para Adicionar Novo Profissional -->
     <a href="#adicionarModal" class="btn btn-success" style="background-color: #015958; border-color: #015958; color: white;" data-toggle="modal">
         Adicionar +
     </a>
 </div>
 
-<!-- Tabela de Profissionais -->
 <div>
     <table class="table table-bordered mt-4">
         <thead>
@@ -48,7 +45,6 @@
                         <td>@profissional.TipoDocumento</td>
                         <td>@profissional.NumeroDocumento</td>
                         <td>
-                            <!-- Dropdown de Ações -->
                             <div class="dropdown">
                                 <button class="btn" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false" style="border: none">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16" style="color: black">
@@ -56,7 +52,6 @@
                                     </svg>
                                 </button>
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <!-- Botão Editar -->
                                     <li>
                                         <a class="dropdown-item" data-toggle="modal" data-target="#editarModal"
                                            data-id="@profissional.Id"
@@ -67,7 +62,6 @@
                                             Editar
                                         </a>
                                     </li>
-                                    <!-- Botão Excluir -->
                                     <li>
                                         <a class="dropdown-item" data-toggle="modal" data-target="#excluirModal"
                                            data-id="@profissional.Id"
@@ -106,7 +100,6 @@
     }
 </script>
 
-<!-- Modal para Cadastrar Novo Profissional -->
 <div class="modal fade" id="adicionarModal" tabindex="-1" role="dialog" aria-labelledby="adicionarModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -150,7 +143,6 @@
     </div>
 </div>
 
-<!-- Modal para Editar Profissional -->
 <div class="modal fade" id="editarModal" tabindex="-1" role="dialog" aria-labelledby="editarModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -194,7 +186,6 @@
     </div>
 </div>
 
-<!-- Modal para Excluir Profissional -->
 <div class="modal fade" id="excluirModal" tabindex="-1" role="dialog" aria-labelledby="excluirModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
