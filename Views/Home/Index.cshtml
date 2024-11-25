@@ -137,13 +137,13 @@
                             <option value="" hidden></option>
                             @foreach (var especialidade in ViewBag.Especialidades as List<GestaoProfissionais.Models.Especialidade>)
                             {
-                                <option value="@especialidade.Id">@especialidade.Nome</option>
+                                <option value="@especialidade.Id" data-tipodocumento="@especialidade.TipoDocumento">@especialidade.Nome</option>
                             }
                         </select>
                     </div>
                     <div class="form-group">
                         <label for="TipoDocumento">Tipo do Documento</label>
-                        <input type="text" class="form-control" id="TipoDocumento" name="TipoDocumento" required />
+                        <input type="text" class="form-control" id="TipoDocumento" name="TipoDocumento" readonly/>
                     </div>
                     <div class="form-group">
                         <label for="NumeroDocumento">Número do Documento</label>
@@ -176,16 +176,16 @@
                     </div>
                     <div class="form-group">
                         <label for="Especialidade">Especialidade</label>
-                        <select id="EspecialidadeEdit" name="EspecialidadeId" class="form-control">
+                        <select id="EspecialidadeEdit" name="EspecialidadeId" class="form-control tipo-documento-dropdown">
                             @foreach (var especialidade in ViewBag.Especialidades as List<GestaoProfissionais.Models.Especialidade>)
                             {
-                                <option value="@especialidade.Id">@especialidade.Nome</option>
+                                <option value="@especialidade.Id" data-tipodocumento="@especialidade.TipoDocumento">@especialidade.Nome</option>
                             }
                         </select>
                     </div>
                     <div class="form-group">
                         <label for="TipoDocumento">Tipo do Documento</label>
-                        <input type="text" class="form-control" id="TipoDocumentoEdit" name="TipoDocumento" required />
+                        <input type="text" class="form-control tipo-documento-input" id="TipoDocumentoEdit" name="TipoDocumento" readonly />
                     </div>
                     <div class="form-group">
                         <label for="NumeroDocumento">Número do Documento</label>
@@ -261,5 +261,28 @@
         modal.find('#TipoDocumentoEdit').val(tipoDocumento);
         modal.find('#NumeroDocumentoEdit').val(numeroDocumento);
         modal.find('#EspecialidadeEdit').val(especialidadeId);
+    });
+</script>
+
+<script>
+    document.getElementById('Especialidade').addEventListener('change', function () {
+        const selectedOption = this.options[this.selectedIndex];
+        const tipoDocumento = selectedOption.getAttribute('data-tipodocumento');
+        document.getElementById('TipoDocumento').value = tipoDocumento || '';
+    });
+</script>
+
+<script>
+    document.querySelectorAll('.tipo-documento-dropdown').forEach(function (dropdown) {
+        dropdown.addEventListener('change', function () {
+            const selectedOption = this.options[this.selectedIndex];
+            const tipoDocumento = selectedOption.getAttribute('data-tipodocumento');
+
+            const modal = this.closest('.modal');
+            const tipoDocumentoInput = modal.querySelector('.tipo-documento-input');
+            if (tipoDocumentoInput) {
+                tipoDocumentoInput.value = tipoDocumento || '';
+            }
+        });
     });
 </script>
