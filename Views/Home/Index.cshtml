@@ -16,21 +16,37 @@
         </div>
     </form>
 
+    @if (TempData["CadastroSucesso"] != null)
+    {
+        <div class="alert alert-success" role="alert" id="alertMessage" style="margin-bottom: 0; margin-top: 10px; width: auto; height: 40px; display: inline-flex; justify-content: center; align-items: center; padding: 0 15px; text-align: center; position: relative; z-index: 9999;">
+            @TempData["CadastroSucesso"]
+        </div>
+
+        <script>
+            setTimeout(function () {
+                var alertMessage = document.getElementById("alertMessage");
+                if (alertMessage) {
+                    alertMessage.style.display = 'none';
+                }
+            }, 5000);
+        </script>
+    }
+
     <a href="#adicionarModal" class="btn btn-success" style="background-color: #015958; border-color: #015958; color: white;" data-toggle="modal">
         Adicionar +
     </a>
 </div>
 
 <div>
-    <table class="table table-bordered mt-4">
+    <table class="table table-bordered mt-4" style="table-layout: fixed; width: 100%;">
         <thead>
             <tr>
-                <th><b>#</b></th>
-                <th>Nome</th>
-                <th>Especialidade</th>
-                <th>Tipo de Documento</th>
-                <th>Número do Documento</th>
-                <th>Ações</th>
+                <th style="width: 5%;"><b>#</b></th>
+                <th style="width: 20%;">Nome</th>
+                <th style="width: 20%;">Especialidade</th>
+                <th style="width: 20%;">Tipo de Documento</th>
+                <th style="width: 20%;">Número do Documento</th>
+                <th style="width: 10%;">Ações</th>
             </tr>
         </thead>
         <tbody>
@@ -48,7 +64,7 @@
                             <div class="dropdown">
                                 <button class="btn" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false" style="border: none">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16" style="color: black">
-                                        <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5" />
+                                        <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5" />
                                     </svg>
                                 </button>
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -105,14 +121,14 @@
         <div class="modal-content">
             <form method="post" action="@Url.Action("Adicionar", "Home")">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="adicionarModalLabel">Cadastrar Novo Profissional</h5>
+                    <h5 class="modal-title" id="adicionarModalLabel">Adicionar Profissional</h5>
                     <button type="button" class="close border-0 bg-transparent" style="font-size: 20px" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <label for="Nome">Nome</label>
+                        <label for="Nome">Nome do Profissional</label>
                         <input type="text" class="form-control" id="Nome" name="Nome" required />
                     </div>
                     <div class="form-group">
@@ -126,7 +142,7 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="TipoDocumento">Tipo de Documento</label>
+                        <label for="TipoDocumento">Tipo do Documento</label>
                         <input type="text" class="form-control" id="TipoDocumento" name="TipoDocumento" required />
                     </div>
                     <div class="form-group">
@@ -155,7 +171,7 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <label for="Nome">Nome</label>
+                        <label for="Nome">Nome do Profissional</label>
                         <input type="text" class="form-control" id="NomeEdit" name="Nome" required />
                     </div>
                     <div class="form-group">
@@ -168,7 +184,7 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="TipoDocumento">Tipo de Documento</label>
+                        <label for="TipoDocumento">Tipo do Documento</label>
                         <input type="text" class="form-control" id="TipoDocumentoEdit" name="TipoDocumento" required />
                     </div>
                     <div class="form-group">

@@ -28,6 +28,7 @@ namespace GestaoProfissionais.Controllers
         public async Task<IActionResult> Adicionar(Profissional profissional)
         {
             await _profissionalRepo.AdicionarProfissionalAsync(profissional);
+            TempData["CadastroSucesso"] = "Profissional cadastrado com sucesso!";
             return RedirectToAction(nameof(Index));
         }
 

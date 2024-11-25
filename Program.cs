@@ -7,7 +7,6 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddScoped<IProfissionalRepository, ProfissionalRepository>();
 builder.Services.AddScoped<IEspecialidadeRepository, EspecialidadeRepository>();
 
-// Configuração do DbContext com SQLite
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
 
