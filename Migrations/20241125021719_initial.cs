@@ -7,7 +7,7 @@
 namespace GestaoProfissionais.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -33,9 +33,9 @@ namespace GestaoProfissionais.Migrations
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     Nome = table.Column<string>(type: "TEXT", nullable: false),
-                    EspecialidadeId = table.Column<int>(type: "INTEGER", nullable: false),
                     TipoDocumento = table.Column<string>(type: "TEXT", nullable: false),
-                    NumeroDocumento = table.Column<string>(type: "TEXT", nullable: false)
+                    NumeroDocumento = table.Column<string>(type: "TEXT", nullable: false),
+                    EspecialidadeId = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
