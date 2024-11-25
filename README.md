@@ -36,7 +36,7 @@
 - Vale ressaltar que, caso os comandos sejam executados fora da solução, ou seja, no CMD, é necessário ter o EF Core Tools instalado na máquina **(dotnet tool install --global dotnet-ef)**.
 
 **3 - Execute o Projeto**
-- dotnet run
+- dotnet run (http://localhost:5143 ou https://localhost:7073)
 
 ## Estrutura do Projeto
 
