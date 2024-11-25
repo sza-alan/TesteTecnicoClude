@@ -15,6 +15,7 @@
 - SQLite
 - Entity Framework Core
 - ASP.NET MVC
+- Visual Studio 2022
 
 ## Configuração e Execução do Projeto
 
