@@ -32,8 +32,8 @@
 }
 ```
 
-- Neste caso o banco de dados (SQLite) já existe na aplicação, tendo apenas que executar o projeto para consumir.
-- Caso necessário, pode ser utilizado o comando **dotnet ef database update** para executar as migrações.
+- Escreva o comando **dotnet ef database update** no terminal dentro da solução para executar as migrações.
+- Vale ressaltar que, caso os comandos sejam executados fora da solução, ou seja, no CMD, é necessário ter o EF Core Tools instalado na máquina **(dotnet tool install --global dotnet-ef)**.
 
 **3 - Execute o Projeto**
 - dotnet run
